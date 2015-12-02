@@ -19,6 +19,7 @@
     - mlocate
     - rxvt-unicode
     - clamav
+    - net-tools
   become: true
 
 - name: Enable cronie service.
@@ -71,7 +72,7 @@
 
 - name: Create user.
   user:
-    name: "{{ user_name }}"
+    name: "{{ user }}"
     append: yes
     shell: /usr/bin/zsh
     groups: sudo
@@ -95,8 +96,8 @@
   copy:
     src: Xdefaults
     dest: "{{ user_home }}/.Xdefaults"
-    owner: "{{ user_name }}"
-    group: "{{ user_group }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
     mode: 0700
   tags:
     - home
@@ -104,8 +105,8 @@
 - name: Create user_home git subfolder
   file:
     path: "{{ user_home }}/git"
-    owner: "{{ user_name }}"
-    group: "{{ user_group }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
     mode: 0740
     state: directory
   tags:
@@ -114,8 +115,8 @@
 - name: Create user_home import subfolder
   file:
     path: "{{ user_home }}/import"
-    owner: "{{ user_name }}"
-    group: "{{ user_group }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
     mode: 0740
     state: directory
   tags:
@@ -125,8 +126,8 @@
   file:
     path: "{{ user_home }}/export"
     state: directory
-    owner: "{{ user_name }}"
-    group: "{{ user_group }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
     mode: 0740
   tags:
     - home
@@ -134,8 +135,8 @@
 - name: Create user_home/tmp subfolder
   file:
     path: "{{ user_home }}/tmp"
-    owner: "{{ user_name }}"
-    group: "{{ user_group }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
     state: directory
     mode: 0740
   tags:
@@ -175,9 +176,9 @@
     mode: 0700
   become: true
 
-- name: Update the virus definitions.
-  command: freshclam
-  become: true
+# - name: Update the virus definitions.
+#   command: freshclam
+#   become: true
 
 - name: Create clamav cronjob.
   cron:
@@ -202,4 +203,3 @@
     src: locale.conf.j2
     dest: /etc/locale.conf
   become: true
-  
