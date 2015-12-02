@@ -1,0 +1,41 @@
+user_bin: /usr/local/bin
+user_name: me
+user_group: me
+keyboard_vendor_id: 04d9
+keyboard_model_id: 0169
+kbd_layout: gb
+
+netctl_interface: "{{ ansible_default_ipv4.interface }}"
+netctl_ip: dhcp
+
+netctl_profiles:
+  -
+   netctl_essid: barettino
+   netctl_key: magdalena
+   netctl_security: wpa
+  -
+   netctl_essid: barettino
+   netctl_key: magdalena
+   netctl_security: wpa
+  -
+   netctl_essid: barettino
+   netctl_key: magdalena
+   netctl_security: wpa
+  -
+   netctl_essid: barettino
+   netctl_key: magdalena
+   netctl_security: wpa
+  -
+   netctl_essid: barettino
+   netctl_key: magdalena
+   netctl_security: wpa
+  -
+   netctl_essid: barettino
+   netctl_key: magdalena
+   netctl_security: wpa
+  -
+   netctl_essid: barettino
+   netctl_key: magdalena
+   netctl_security: wpa
+
+lang: en_US.UTF-8

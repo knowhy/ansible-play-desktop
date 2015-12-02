@@ -1,0 +1,19 @@
+---
+- hosts: host
+  user: me
+  vars:
+    - user_home: /home/me
+
+  roles:
+    #- main
+    #- xorg
+    #- ratpoison
+    #- emacs
+    #- email
+    #- pulseaudio
+    #- conkeror
+    - cups
+    - media
+    - zsh
+    - mpd
+    - sync

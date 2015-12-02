@@ -1,0 +1,27 @@
+---
+
+- name: Install xulrunner.
+  pacman:
+    name: xulrunner
+    state: present
+  become: true
+
+- name: Checkout conkeror git repository.
+  git:
+    repo: git://repo.or.cz/conkeror.git
+    dest: "/home/{{ user }}/git/conkeror"
+    accept_hostkey: true
+
+- name: Copy conkeror launcher script.
+  template:
+    src: conkeror-launcher.j2
+    dest: /usr/bin/conkeror
+    mode: 0770
+    owner: root
+    group: me
+  become: true
+
+- name: Copy conkerorrc
+  template:
+    src: conkerorrc.j2
+    dest: "/home/{{ user }}/.conkerorrc"

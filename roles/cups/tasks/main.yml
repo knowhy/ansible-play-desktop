@@ -1,0 +1,24 @@
+---
+
+- name: Install cups.
+  pacman:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - cups
+    - cups-filters
+    - libcups
+    - lib32-libcups
+  become: true
+
+- name: Configure default printer.
+  template:
+    src: printers.conf.j2
+    dest: /etc/cups/printer.conf
+  become: true
+
+- name: Configure cupsd printer daemon.
+  template:
+    src: cupsd.conf.j2
+    dest: /etc/cups/cupsd.conf
+  become: true

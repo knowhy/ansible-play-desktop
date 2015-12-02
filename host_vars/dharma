@@ -1,0 +1,29 @@
+user_bin: /usr/local/bin
+user: me
+keyboard_vendor_id: 04d9
+keyboard_model_id: 0169
+kbd_layout: gb
+
+git_sync_repo: 
+
+netctl_interface: "{{ ansible_default_ipv4.interface }}"
+netctl_ip: dhcp
+
+backup_server: 
+backup_git_home: "/home/{{ user_name }}/git/configs"
+emacs_repo: configs
+user_git_home: "{{ user_home }}/git"
+user_home: "/home/{{ user_name }}"
+user: me
+
+mail_path: "{{ user_home }}/mail"
+imap_host: imap.gmail.com
+imap_user: 
+imap_password: 
+
+conkeror_use_tor: false
+
+pbname: $inventory_hostname
+distro: ${ansible_distribution}
+pkg_mgr: ${ansible_pkg_mgr}
+zsh_theme: steeef

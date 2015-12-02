@@ -1,0 +1,205 @@
+---
+
+- name: Install common packages
+  pacman:
+    pkg: "{{ item }}"
+    state: installed
+  with_items:
+    - strace
+    - bind-tools
+    - bzr
+    - dialog
+    - dosfstools
+    - cronie
+    - zsh
+    - git
+    - subversion
+    - rsync
+    - dunst
+    - mlocate
+    - rxvt-unicode
+    - clamav
+  become: true
+
+- name: Enable cronie service.
+  service:
+    name: cronie
+    state: started
+    enabled: yes
+  become: true
+  
+- name: Create udev rule to switch keyboard layout.
+  template:
+    src: udev.rule.j2
+    dest: /etc/udev/rules.d/00-usb-keyboards.rules
+    mode: 0755
+    owner: root
+    group: root
+  become: true
+  
+- name: Setup xmodmap for German umlaute.
+  template:
+    src: Xmodmap.j2
+    dest: "{{ user_home }}/.xmodmap"
+  
+- name: Create keyboard layout switch script
+  template:
+    src: kbd-switch.sh.j2
+    dest: /usr/bin/kbd-switch
+    mode: 0755
+    owner: root
+    group: root
+  become: true
+
+- name: Create udev rule to switch monitor settings
+  template:
+    src: udev-monitor.rule.j2
+    dest: /etc/udev/rules.d/00-monitor-hotplug.rules
+    mode: 0755
+    owner: root
+    group: root
+  become: true
+
+# - name: Create netctl profiles
+#   # http://stackoverflow.com/questions/21172312/how-to-loop-over-array-containing-template-variables-with-ansible
+#   template:
+#     src: netctl-profile.j2
+#     dest: "/etc/netctl/{{ netctl_interface }}-{{ netctl_essid }}"
+#     owner: root
+#     group: root
+#     mode: 0600
+
+- name: Create user.
+  user:
+    name: "{{ user_name }}"
+    append: yes
+    shell: /usr/bin/zsh
+    groups: sudo
+  become: true
+
+# - name: Create sudoers rule for sudo group.
+#   lineinfile:
+#     dest: /etc/sudoers
+#     state: present
+#     regexp: '^%sudo ALL\='
+#     line: '%wheel ALL=(ALL)'
+#     validate: 'visudo -cf %s'
+
+- name: Update locatedb.
+  command: updatedb
+  tags:
+    - base
+  become: true
+    
+- name: Configure urxvt.
+  copy:
+    src: Xdefaults
+    dest: "{{ user_home }}/.Xdefaults"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+    mode: 0700
+  tags:
+    - home
+    
+- name: Create user_home git subfolder
+  file:
+    path: "{{ user_home }}/git"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+    mode: 0740
+    state: directory
+  tags:
+    - home
+    
+- name: Create user_home import subfolder
+  file:
+    path: "{{ user_home }}/import"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+    mode: 0740
+    state: directory
+  tags:
+    - home
+      
+- name: Create user_home/export subfolder
+  file:
+    path: "{{ user_home }}/export"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+    mode: 0740
+  tags:
+    - home
+  
+- name: Create user_home/tmp subfolder
+  file:
+    path: "{{ user_home }}/tmp"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+    state: directory
+    mode: 0740
+  tags:
+    - home
+    
+# - name: Download hosts rules from someonewhocares.com
+#   get_url:
+#     url: http://someonewhocares.org/hosts/hosts
+#     dest: /tmp/hosts
+#   tags:
+#     - adblock
+
+# - name: Remove localhost part from hosts
+#   shell: sed -n -e '/shock-sites/,$p' hosts > /tmp/hosts-clean
+#   args:
+#     chdir: /tmp
+#   tags:
+#     - adblock
+    
+# - name: Insert someonewhocares rules to /etc/hosts
+#   command: cat /tmp/hosts-clean >> /etc/hosts
+#   args:
+#     chdir: /tmp
+#   tags:
+#     - adblock
+
+#- name: Cleanup /tmp
+#  command: rm -f hosts*
+#    chdir: /tmp 
+
+- name: Configure clamav.
+  copy:
+    src: clamav.conf
+    dest: /etc/clamav/clamav.conf
+    owner: root
+    group: root
+    mode: 0700
+  become: true
+
+- name: Update the virus definitions.
+  command: freshclam
+  become: true
+
+- name: Create clamav cronjob.
+  cron:
+    name: "clam virus scanner"
+    job: clamscan -r -i --exclude-dir='^/sys|^/proc|^/dev|^/lib|^/bin|^/sbin' /
+    special_time: weekly
+    user: root
+    state: present
+  become: true
+
+- name: Create clamav update cronjob.
+  cron:
+    name: "clam virus scanner update"
+    job: freshclam
+    special_time: weekly
+    user: root
+    state: present
+  become: true
+
+- name: Configure locale.conf.
+  template:
+    src: locale.conf.j2
+    dest: /etc/locale.conf
+  become: true
+  

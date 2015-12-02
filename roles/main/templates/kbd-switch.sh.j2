@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+function connect(){
+    sleep 1
+    setxkbmap -layout us
+    xmodmap /home/me/.Xmodmap
+}
+
+function disconnect(){
+    sleep 1
+    setxkbmap -layout gb
+    xmodmap /home/me/.Xmodmap
+}
+
+lsusb | grep "{{ keyboard_vendor_id }}" &> /dev/null && connect || disconnect

@@ -1,0 +1,35 @@
+#exec xmodmap -e "keycode 133 = F30"
+#escape F30
+
+#bind w exec ~/git/bin/wm/windows
+#bind s-w exec ~/git/bin/wm/windows
+
+# overriding CTRL+t 'c' to start sakura instead of xterm
+bind c exec urxvt
+bind s-c exec urxvt
+
+# bind exclam ! to HOME-x
+bind x exec
+bind s-x exec
+
+#bind e exec emacs
+
+#exec unclutter -root -idle 1 -jitter 200 -grab &
+
+#exec pulseaudio --start
+
+# conkeror alias is now done via bash script in /usr/bin/
+# alias conkeror xulrunner /usr/local/bin/conkeror/application.ini
+# screen size adjustment is now done over xinitrc
+# exec xrandr --output LVDS1 --off --output VGA1 --mode 1920x1080
+
+#exec mpd
+#exec offlineimap
+exec xmodmap /home/me/.Xmodmap
+
+#exec torify conkeror
+#conkeror
+#exec emacs
+#exec /usr/bin/btsync --config /home/me/.btsyncrc
+
+exec {{ user_home }}/run-ratpoison.sh

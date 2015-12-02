@@ -1,0 +1,54 @@
+---
+- hosts: localhost
+  sudo: yes
+
+  vars:
+    git_home: "/var/git"
+
+  tasks:
+    - name: Create git_home.
+      file:
+        path: "{{ git_home }}"
+        state: directory
+    
+    - name: Checkout tesseract source.
+      git:
+        repo: "https://github.com/tesseract-ocr/tesseract.git"
+        dest: "{{ git_home }}/tesseract"
+
+    - name: Build tesseract.
+      shell: "cd {{ git_home }}/tesseract;{{ item }}"
+      with_items:
+        - ./autogen.sh
+        - ./configure
+        - make
+
+    - name: Install tesseract.
+      shell: "cd {{ git_home }}/tesseract;make install"
+
+    - name: Checkout tessdata.
+      git:
+        repo: "https://github.com/tesseract-ocr/tessdata.git"
+        dest: "{{ git_home }}/tessdata"
+      
+    # - name: Create configure script.
+    #   shell: ./autogen.sh
+    #   args:
+    #     chdir: "{{ git_home }}/tesseract"
+
+    # - name: Configure tesseract.
+    #   shell: ./configure
+    #   args:
+    #     chdir: "{{ git_home }}/tesseract"
+
+    # - name: Build tesseract.
+    #   shell: make
+    #   args:
+    #     chdir: "{{ git_home }}/tesseract"
+
+    # - name: Install tesseract.
+    #   shell: ./make install
+    #   args:
+    #     chdir: "{{ git_home }}/tesseract"
+
+        

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+{% if conkeror_use_tor %}
+exec torify xulrunner {{ user_bin }}/conkeror/application.ini "$@"
+{% else %}
+exec xulrunner {{  user_bin }}/conkeror/application.ini "$@"
+{% endif %}

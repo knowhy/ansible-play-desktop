@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+remote_host=nirvana
+remote_user=me
+directories=( media docs scans ebooks )
+
+for dir in "${directories[@]}"
+do
+    rsync -r -t -u --delete -b --backup-dir=/home/me/backups $remote_user@$remote_host:/home/me/$dir /home/me/$dir
+done

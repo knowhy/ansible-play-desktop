@@ -1,0 +1,14 @@
+---
+
+- name: Install packages to work with pdf files.
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mupdf
+    - poppler
+    - pdflatex
+    - texlive-core
+    - texlive-bin
+    - ghostscript
+    - imagemagick

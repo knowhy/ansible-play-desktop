@@ -1,0 +1,23 @@
+---
+
+- name: Install mpd server.
+  pacman:
+    name: mpd
+    state: present
+  become: true
+
+- name: Configure mpd server.
+  template:
+    src: mpd.conf.j2
+    dest: /etc/mpd.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+
+- name: Enable mpd server.
+  service:
+    name: mpd
+    enabled: yes
+    state: started
+  become: true

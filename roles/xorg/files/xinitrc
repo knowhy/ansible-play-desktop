@@ -1,0 +1,5 @@
+exec ratpoison
+eval $(gpg-agent --daemon) &
+exec unclutter &
+eval xset -dpms
+pulseaudio --start

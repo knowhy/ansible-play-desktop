@@ -1,0 +1,27 @@
+---
+
+- name: Install xorg-server and nvidia drivers.
+  pacman:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - xorg-server
+    - xorg-server-utils
+    - xorg-apps
+    - xorg-xinit
+    - xf86-video-nouveau
+  become: true
+
+- name: Configure xinitrc.
+  copy:
+    src: xinitrc
+    dest: "{{ user_home }}/.xinitrc"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+
+- name: Configure zsh_profile.
+  copy:
+    src: zprofile
+    dest: "{{ user_home }}/.zprofile"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"

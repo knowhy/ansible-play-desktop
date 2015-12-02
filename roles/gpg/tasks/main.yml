@@ -1,0 +1,16 @@
+---
+
+- name: Install gnupg.
+  pacman:
+    name: gnupg
+    state: present
+  tags:
+    - pacman
+    - gnupg
+
+- name: Configure gnupg.
+  template:
+    src: gnupg.conf.j2
+    dest: /home/{{ user_name }}/.gnupg/gnup.conf
+    
+        

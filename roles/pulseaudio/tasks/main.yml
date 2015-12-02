@@ -1,0 +1,60 @@
+---
+
+- name: Install pulseaudio packages.
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - pulseaudio
+    - pulseaudio-alsa
+    - pamixer
+#    - lib32-libpulse
+#    - lib32-alsa-plugins
+  tags:
+    - pulse
+    - pacman
+  become: true
+
+- name: Disable snd_pcm_oss.
+  modprobe:
+    name: snd_pcm_oss
+    state: absent
+  tags:
+    - pulseaudio
+    - kernel
+  become: true
+    
+- name: Enable pulseaudio at start of xserver.
+  lineinfile:
+    dest: "{{ user_home }}/.xinitrc"
+    line: "pulseaudio --start"
+  tags:
+    - X
+    - pulseaudio
+
+- name: Install pulseaudio-equalizer.
+  pacman:
+    name: pulseaudio-equalizer
+    state: present
+  become: true
+  tags:
+    - pulseaudio
+    - pacman
+  
+- name: Start pulseaudio.
+  command: pulseaudio --start
+  tags:
+    - pulseaudio
+  
+- name: Load pulseaudio equalizer sink.
+  command: pactl load-module module-equalizer-sink
+  tags:
+    - pulseaudio
+
+- name: Load pulseaudio dbus-protocol module.
+  command: pactl load-module module-dbus-protocol
+  tags:
+    - pulseaudio
+
+#- name: Configure keyboard shortcuts
+  

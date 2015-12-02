@@ -1,0 +1,20 @@
+---
+- name: ratpoison | Install ratpoison.
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ratpoison
+    - dunst
+  become: true
+
+- name: ratpoison | Configure ratpoison.
+  template:
+    src: ratpoisonrc.j2
+    dest: "{{ user_home }}/.ratpoisonrc"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+    mode: 0644  
+
+#- name: dunst | Configure dunst.
+  

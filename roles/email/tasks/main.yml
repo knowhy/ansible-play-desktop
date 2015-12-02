@@ -1,0 +1,71 @@
+---
+
+- name: Make mail directory.
+  file:
+    path: "/home/{{ user }}/mail"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0700
+    
+- name: Install isync.
+  pacman:
+    pkg: isync
+    state: present
+  become: true
+
+- name: Configure isync.
+  template:
+    src: mbsyncrc.j2
+    dest: "/home/{{ user }}/.mbsyncrc"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0700
+
+- name: Create isync cronjob.
+  cron:
+    name: "isync sync."
+    minute: "*/5"
+    job: /usr/bin/mbsync -a
+    user: "{{ user }}"
+  become: true
+    
+- name: Install notmuch.
+  pacman:
+    name: notmuch
+    state: present
+  tags:
+    - pacman
+    - notmuch
+  become: true
+  
+- name: Configure notmuch.
+  template:
+    src: notmuch-config.j2
+    dest: "/home/{{ user }}/.notmuch-config"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0700
+  tags:
+    - notmuch
+
+- name: Create notmuch cronjob.
+  cron:
+    name: "Update notmuch db"
+    minute: "*/5"
+    user: "{{ user }}"
+    job: "notmuch new"
+  tags:
+    - notmuch
+  become: true
+
+# - name: Run notmuch setup.
+#   command: notmuch setup
+#   args:
+#     creates: "{{ user_home }}/.notmuch"
+#   become_user: "{{ user_name }}"
+    
+- name: Run inital notmuch index.
+  command: notmuch new
+  become: true
+  become_user: "{{ user }}"

@@ -1,0 +1,28 @@
+[database]
+path={{ mail_path }}
+
+[new]
+tags=unread;inbox
+ignore=
+
+[search]
+exclude_tags=deleted;spam
+
+#notmuch tag -inbox +emacs-orgmode to:emacs-orgmode-request@gnu.org tag:inbox
+#notmuch tag -inbox +ghc-devs to:ghc-devs@haskell.org tag:inbox
+#notmuch tag -inbox +ghc-users to:glasgow-haskell-users@haskell.org tag:inbox
+#notmuch tag -inbox +haskell-cafe to:haskell-cafe@haskell.org tag:inbox
+#notmuch tag -inbox +haskell-beginners to:beginners@haskell.org tag:inbox
+[new]
+tags=new;
+
+#After running notmuch new, all new messages will be marked new. You can then do various tag post-processing by just acting on messages with that #tag. For instance, a post-processing script might do the following:
+
+# immediately archive all messages from "me"
+#notmuch tag -new -- tag:new and from:me@example.com
+# delete all messages from a spammer:
+#notmuch tag +deleted -- tag:new and from:spam@spam.com
+# tag all message from notmuch mailing list
+#notmuch tag +notmuch -- tag:new and to:notmuch@notmuchmail.org
+# finally, retag all "new" messages "inbox" and "unread"
+#notmuch tag +inbox +unread -new -- tag:new

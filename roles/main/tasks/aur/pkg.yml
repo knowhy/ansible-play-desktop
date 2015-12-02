@@ -1,0 +1,8 @@
+# Example ./roles directory structure for an existing Ansible playbook with a 'foobar' role 
+#   roles/
+#     foobar/
+#       tasks/
+#         aur/          # Source repo added as a submodule (cloned into an `aur` directory)
+#           pkg.yml     # Include this file with vars 'pkg_name' and 'makepkg_nonroot_user' to install an AUR package
+$ cd ./roles/foobar/tasks
+$ git submodule add https://gist.github.com/39ecb1eb1ab8ee1d0ce1.git aur

@@ -1,0 +1,9 @@
+---
+
+- name: Install rkhunter.
+  pacman:
+    name: rkhunter
+    state: present
+
+- name: Update rkhunter database.
+  command: rkhunter --update --propupd

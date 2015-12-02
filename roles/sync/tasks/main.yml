@@ -1,0 +1,44 @@
+---
+
+- name: Install org-git-sync script
+  template:
+    src: org-git-sync.sh.j2
+    dest: /usr/bin/org-git-sync
+    mode: 0700
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+
+- name: Create cronjob for org-git-sync.
+  cron:
+    name: org-git-sync
+    job: /usr/bin/org-git-sync
+    minute: "*/5"
+    user: "{{ user_name }}"
+
+- name: Install git-sync script
+  template:
+    src: git-sync.sh.j2
+    dest: /usr/bin/git-sync
+    mode: 0700
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+
+- name: Create cronjob for git-sync.
+  cron:
+    name: org-git-sync
+    job: /usr/bin/git-sync
+    minute: "*/5"
+    user: "{{ user_name }}"
+
+- name: Install data-sync script.
+  template:
+    src: data-sync.sh.j2
+    dest: /usr/bin/data-sync
+    mode: 0770
+
+- name: Create cronjob for data-sync.
+  cron:
+    name: data-sync
+    job: /usr/bin/data-sync
+    minute: 1
+    user: "{{ user_name }}"

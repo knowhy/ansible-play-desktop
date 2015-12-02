@@ -1,0 +1,3 @@
+---
+- name: Install xdotools
+  pacman: name=xdotool state=present
