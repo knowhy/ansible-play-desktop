@@ -16,12 +16,18 @@
   copy:
     src: xinitrc
     dest: "{{ user_home }}/.xinitrc"
-    owner: "{{ user_name }}"
-    group: "{{ user_group }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
 - name: Configure zsh_profile.
   copy:
     src: zprofile
     dest: "{{ user_home }}/.zprofile"
-    owner: "{{ user_name }}"
-    group: "{{ user_group }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    
+- name: Install freetype2-infinality.
+  include: aur/pkg.yml pkg_name=freetype2-infinality
+
+- name: Install fontconfig-infinality.
+  include: aur/pkg.yml pkg_name=fontconfig-infinality
