@@ -6,20 +6,17 @@
     state: present
   with_items:
     - mpv
-    - beet
+#    - beet
     - youtube-dl
     - youtube-viewer
   become: true
 
-- name: Configure beets.
-  template:
-    src: beet_config.yaml.j2
-    dest: "/home/{{ user }}/.config/beets/config.yaml"
+# - name: Configure beets.
+#   template:
+#     src: beet_config.yaml.j2
+#     dest: "/home/{{ user }}/.config/beets/config.yaml"
 
 - name: Make media directory.
   file:
     path: "/home/{{ user }}/media"
     state: directory
-
-    
-- name: Install youtube2mp3 script.

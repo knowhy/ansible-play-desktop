@@ -11,6 +11,4 @@
 - name: Configure gnupg.
   template:
     src: gnupg.conf.j2
-    dest: /home/{{ user_name }}/.gnupg/gnup.conf
-    
-        
+    dest: /home/{{ user }}/.gnupg/gnup.conf

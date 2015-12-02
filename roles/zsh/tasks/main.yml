@@ -25,14 +25,14 @@
 
 - name: Create conf folder in home directory
   file:
-    path: "/home/{{ user }}/conf/"
+    path: "/home/{{ user }}/.config/"
     state: directory
     owner: "{{ user }}"
 
 - name: symlink zshrc
   file:
     path: "/home/{{ user }}/.zshrc"
-    src: "/home/{{ user }} /conf/zshrc"
+    src: "/home/{{ user }} /.config/zshrc"
     state: link
     owner: "{{ user }}"
 
