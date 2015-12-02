@@ -1,44 +1,62 @@
 ---
+- name: Install cronie cron daemon.
+  pacman:
+    pkg: cronie
+    state: present
 
 - name: Install org-git-sync script
   template:
     src: org-git-sync.sh.j2
-    dest: /usr/bin/org-git-sync
+    dest: /usr/local/bin/org-git-sync
     mode: 0700
-    owner: "{{ user_name }}"
-    group: "{{ user_group }}"
-
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: true
+    
 - name: Create cronjob for org-git-sync.
   cron:
     name: org-git-sync
-    job: /usr/bin/org-git-sync
+    job: /usr/local/bin/org-git-sync
     minute: "*/5"
-    user: "{{ user_name }}"
-
+    user: "{{ user }}"
+  become: true
+    
 - name: Install git-sync script
   template:
     src: git-sync.sh.j2
-    dest: /usr/bin/git-sync
+    dest: /usr/local/bin/git-sync
     mode: 0700
-    owner: "{{ user_name }}"
-    group: "{{ user_group }}"
-
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: true
+    
 - name: Create cronjob for git-sync.
   cron:
     name: org-git-sync
-    job: /usr/bin/git-sync
+    job: /usr/local/bin/git-sync
     minute: "*/5"
-    user: "{{ user_name }}"
+    user: "{{ user }}"
+  become: true
+    
+- name: Install Syncthing.
+  pacman:
+    pkg: syncthing
+    state: present
+  become: true
 
-- name: Install data-sync script.
-  template:
-    src: data-sync.sh.j2
-    dest: /usr/bin/data-sync
-    mode: 0770
+- name: Copy Syncthing Systemd unit file.
+  copy:
+    src: syncthing@.service
+    dest: /usr/lib/systemd/system/syncthing@.service
+  become: true
 
-- name: Create cronjob for data-sync.
-  cron:
-    name: data-sync
-    job: /usr/bin/data-sync
-    minute: 1
-    user: "{{ user_name }}"
+- name: Reload Systemd.
+  command: systemctl daemon-reload
+  become: true
+    
+- name: Start and enable Syncthing service.
+  service:
+    name: "syncthing@{{ user }}"
+    state: started
+    enabled: yes
+  become: true
