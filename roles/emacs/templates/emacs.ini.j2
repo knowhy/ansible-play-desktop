@@ -30,7 +30,7 @@
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
 			 ("melpa" . "http://melpa.milkbox.net/packages/")
-                         ("marmalade" .		 "http://marmalade-repo.org/packages/")))
+                         ("marmalade" .	"http://marmalade-repo.org/packages/")))
 
 ; activate all the packages (in particular autoloads)
 (package-initialize)
@@ -46,18 +46,18 @@
 
 (add-to-list 'load-path (expand-file-name "~/git/popup-el"))
 (add-to-list 'load-path (expand-file-name "~/git/elisp"))
-(add-to-list 'exec-path "/home/me/git/bin/")
 
 (setq mail-user-agent 'message-user-agent)
 
-(setq user-mail-address "@gmail.com"
-      user-full-name "")
+(setq user-mail-address "{{ user_email }}"
+      user-full-name "{{ user_name }}")
 
 (if (boundp 'org-mode-user-lisp-path)
    (add-to-list 'load-path org-mode-user-lisp-path)
  (add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp")))
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+
 (require 'org)
 (require 'git-timemachine)
 (require 'beacon)
@@ -110,7 +110,6 @@
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
-
 
 ;; ;; Use a minimal cursor
 ;(setq cursor-type 'hbar)
@@ -2311,11 +2310,11 @@ Late deadlines first, then scheduled, then non-late deadlines"
 ;; overtone related stuff
 ;; http://bzg.fr/emacs-org-babel-overtone-intro.html
 ;; Cider configuration
-(require 'cider)
-(setq nrepl-hide-special-buffers t
-      cider-repl-pop-to-buffer-on-connect nil
-      cider-popup-stacktraces nil
-      cider-repl-popup-stacktraces t)
+;; (require 'cider)
+;; (setq nrepl-hide-special-buffers t
+;;       cider-repl-pop-to-buffer-on-connect nil
+;;       cider-popup-stacktraces nil
+;;       cider-repl-popup-stacktraces t)
 
 ;; (defvar my-org-mobile-sync-timer nil)
 
@@ -2492,8 +2491,8 @@ Late deadlines first, then scheduled, then non-late deadlines"
 ;; (add-to-list 'load-path "/home/me/.emacs.d/predictive/texinfo")
 ;; (require 'predictive)
 
-(setq jabber-account-list '(("""
-                             (:password . "")
+(setq jabber-account-list '((" "
+                             (:password . " ")
                              (:network-server . "talk.google.com")
                              (:connection-type . starttls)
                              )))
@@ -2509,7 +2508,7 @@ Late deadlines first, then scheduled, then non-late deadlines"
 
 (setq auto-mode-alist (cons '("\\.j2" . jinja2-mode) auto-mode-alist))
 
-(add-hook 'yaml-mode-hook #'ansible-doc-mode)
+(add-hook 'yaml-mode-hook 'ansible-doc-mode)
 
 (put 'narrow-to-region 'disabled nil)
 

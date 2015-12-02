@@ -20,8 +20,14 @@
 # - name: Create symlink to Emacs git repository under {{ user_home }}
 #   file: src={{ user_git_home }}/{{ emacs_repo }}/ dest={{ user_home }}/.emacs state=link owner={{ user_name }} group={{ user_group }} mode=600
 
-- name: Install emacs-git.
-  include: aur/pkg.yml pkg_name=emacs-git
+# - name: Install emacs-git.
+#   include: aur/pkg.yml pkg_name=emacs-git
+
+- name: Install emacs.
+  pacman:
+    pkg: emacs
+    state: present
+  become: true
 
 - name: Create emacs config.
   template:
