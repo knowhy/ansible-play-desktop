@@ -20,6 +20,7 @@
     - rxvt-unicode
     - clamav
     - net-tools
+    - slock
   become: true
 
 - name: Enable cronie service.
@@ -202,4 +203,21 @@
   template:
     src: locale.conf.j2
     dest: /etc/locale.conf
+  become: true
+
+- name: Create screen lock service.
+  template:
+    src: slock.service.j2
+    dest: /usr/lib/systemd/system/slock.service
+  become: true
+
+- name: Reload systemd.
+  command: systemctl daemon-reload
+  become: true
+
+- name: Enable and start slock service.
+  service:
+    name: slock
+    state: started
+    enabled: yes
   become: true
