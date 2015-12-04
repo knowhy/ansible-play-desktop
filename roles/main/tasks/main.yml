@@ -115,7 +115,7 @@
     
 - name: Create user_home import subfolder
   file:
-    path: "{{ user_home }}/import"
+    path: "/home/{{ user }}/import"
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0740
@@ -125,7 +125,7 @@
       
 - name: Create user_home/export subfolder
   file:
-    path: "{{ user_home }}/export"
+    path: "/home/{{ user }}/export"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
@@ -135,7 +135,7 @@
   
 - name: Create user_home/tmp subfolder
   file:
-    path: "{{ user_home }}/tmp"
+    path: "/home/{{ user }}/tmp"
     owner: "{{ user }}"
     group: "{{ user }}"
     state: directory
