@@ -21,6 +21,7 @@
     - clamav
     - net-tools
     - slock
+    - fdupes
   become: true
 
 - name: Enable cronie service.
@@ -221,3 +222,5 @@
     state: started
     enabled: yes
   become: true
+
+- name: 
