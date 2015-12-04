@@ -39,3 +39,5 @@ netctl_profiles:
    netctl_security: wpa
 
 lang: en_US.UTF-8
+
+makepkg_nonroot_user: "{{ ansible_ssh_user }}"

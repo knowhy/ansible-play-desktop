@@ -206,21 +206,25 @@
     dest: /etc/locale.conf
   become: true
 
+- name: Install pacaur.
+  include: aur/pkg.yml pkg_name=pacaur
+
+- name: Install sflock.
+  include: aur/pkg.yml pkg_name=sflock
+
 - name: Create screen lock service.
   template:
-    src: slock.service.j2
-    dest: /usr/lib/systemd/system/slock.service
+    src: sflock.service.j2
+    dest: /usr/lib/systemd/system/sflock.service
   become: true
 
 - name: Reload systemd.
   command: systemctl daemon-reload
   become: true
 
-- name: Enable and start slock service.
+- name: Enable and start sflock service.
   service:
-    name: slock
+    name: sflock
     state: started
     enabled: yes
   become: true
-
-- name: 
