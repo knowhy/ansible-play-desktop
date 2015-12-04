@@ -42,7 +42,7 @@
 - name: Setup xmodmap for German umlaute.
   template:
     src: Xmodmap.j2
-    dest: "{{ user_home }}/.xmodmap"
+    dest: "/home/{{ user }}/.xmodmap"
   
 - name: Create keyboard layout switch script
   template:
@@ -96,7 +96,7 @@
 - name: Configure urxvt.
   copy:
     src: Xdefaults
-    dest: "{{ user_home }}/.Xdefaults"
+    dest: "/home/{{ user }}/.Xdefaults"
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0700
@@ -105,7 +105,7 @@
     
 - name: Create user_home git subfolder
   file:
-    path: "{{ user_home }}/git"
+    path: "/home/{{ user }}/git"
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0740
