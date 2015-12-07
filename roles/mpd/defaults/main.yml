@@ -1,6 +1,7 @@
 ---
+
 mpd_user: mpd
-mpd_music_directory: /home/me/media
+mpd_music_directory: /home/{{ user }}/media/music
 mpd_playlist_directory: /var/lib/mpd/playlists
 mpd_default_permissions: read
 mpd_admin_user_name: mpd

@@ -1,6 +1,6 @@
 # See: /usr/share/doc/mpd/mpdconf.example
 
-user "{{ mpd_user }}"
+user "mpd"
 pid_file "/run/mpd/mpd.pid"
 db_file "/var/lib/mpd/mpd.db"
 state_file "/var/lib/mpd/mpdstate"
@@ -38,7 +38,7 @@ music_directory		"{{ mpd_music_directory }}"
 # The special value "syslog" makes MPD use the local syslog daemon. This
 # setting defaults to logging to syslog, otherwise logging is disabled.
 #
-log_file			"/home/me/.mpd/log"
+log_file			"/var/log/mpd/log"
 #
 # This setting sets the location of the file which stores the process ID
 # for use of mpd --kill and some init scripts. This setting is disabled by
@@ -68,14 +68,14 @@ log_file			"/home/me/.mpd/log"
 # initialization. This setting is disabled by default and MPD is run as the
 # current user.
 #
-#user				"nobody"
+user				"mpd"
 #
 # This setting specifies the group that MPD will run as. If not specified
 # primary group of user specified with "user" setting will be used (if set).
 # This is useful if MPD needs to be a member of group such as "audio" to
 # have permission to use sound card.
 #
-#group				"nogroup"
+group				"mpd"
 #
 # This setting sets the address for the daemon to listen on. Careful attention
 # should be paid if this is assigned to anything other then the default, any.
@@ -155,12 +155,12 @@ auto_update	"yes"
 # If this setting is set to "yes", service information will be published with
 # Zeroconf / Avahi.
 #
-#zeroconf_enabled		"yes"
+zeroconf_enabled		"yes"
 #
 # The argument to this setting will be the Zeroconf / Avahi unique name for
 # this MPD server on the network.
 #
-#zeroconf_name			"Music Player"
+zeroconf_name			"Music Player"
 #
 ###############################################################################
 

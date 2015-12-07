@@ -6,6 +6,14 @@
     state: present
   become: true
 
+- name: Make log directory.
+  file:
+    path: /var/log/mpd
+    state: directory
+    owner: mpd
+    group: mpd
+  become: true
+  
 - name: Configure mpd server.
   template:
     src: mpd.conf.j2
@@ -19,5 +27,5 @@
   service:
     name: mpd
     enabled: yes
-    state: started
+    state: restarted
   become: true
