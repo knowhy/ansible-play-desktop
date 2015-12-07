@@ -24,14 +24,6 @@
     - kernel
   become: true
     
-- name: Enable pulseaudio at start of xserver.
-  lineinfile:
-    dest: "{{ user_home }}/.xinitrc"
-    line: "pulseaudio --start"
-  tags:
-    - X
-    - pulseaudio
-
 - name: Install pulseaudio-equalizer.
   pacman:
     name: pulseaudio-equalizer
