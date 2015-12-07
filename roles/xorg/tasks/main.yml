@@ -19,13 +19,6 @@
     owner: "{{ user }}"
     group: "{{ user }}"
 
-- name: Configure zsh_profile.
-  copy:
-    src: zprofile
-    dest: "{{ user_home }}/.zprofile"
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    
 - name: Install freetype2-infinality.
   include: aur/pkg.yml pkg_name=freetype2-infinality
 
