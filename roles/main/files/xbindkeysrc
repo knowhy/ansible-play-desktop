@@ -1,0 +1,36 @@
+"export MPD_HOST=mpd && MPD_PORT=660 && mpc toggle"
+    m:0x0 + c:172
+    XF86AudioPlay
+"mpc play#"
+    m:0x0 + c:172
+    XF86AudioPlay
+"mpc next"
+    m:0x0 + c:171
+    XF86AudioNext
+"mpc prev"
+    m:0x0 + c:173
+    XF86AudioPrev
+"mpc stop"
+    m:0x0 + c:174
+    XF86AudioStop
+"pactl set-sink-mute 0 toggle"
+    m:0x0 + c:121
+    XF86AudioMute
+"pactl set-sink-mute 0 false ; pactl -- set-sink-volume 0 -5%"
+    m:0x0 + c:122
+    XF86AudioLowerVolume
+"pactl set-sink-mute 0 false ; pactl -- set-sink-volume 0 +5%"
+    m:0x0 + c:123
+    XF86AudioRaiseVolume
+"pactl set-source-mute alsa_input.pci-0000_00_1b.0.analog-stereo toggle"
+    m:0x0 + c:198
+    XF86AudioMicMute
+""
+    m:0x0 + c:156
+    XF86Launch1
+"(Scheme function)"
+    m:0x10 + c:233
+    Mod2 + XF86MonBrightnessUp
+"(Scheme function)"
+    m:0x10 + c:232
+    Mod2 + XF86MonBrightnessDown

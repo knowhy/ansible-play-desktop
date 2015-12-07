@@ -20,8 +20,14 @@
     - rxvt-unicode
     - clamav
     - net-tools
-    - slock
     - fdupes
+    - transmission-cli
+    - gist
+    - feh
+    - shotwell
+    - mp3info
+    - xbindkeys
+    - dex
   become: true
 
 - name: Enable cronie service.
@@ -228,3 +234,9 @@
     state: started
     enabled: yes
   become: true
+
+- name: Configure xbindkeys.
+  copy:
+    src: xbindkeysrc
+    dest: "/home/{{ user }}/.xbindkeysrc"
+    
