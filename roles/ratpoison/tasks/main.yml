@@ -16,5 +16,11 @@
     group: "{{ user }}"
     mode: 0644  
 
+- name: Copy startup script for ratpoison.
+  copy:
+    src: run-ratpoison
+    dest: /usr/local/bin/run-ratpoison
+    mode: 750
+    
 #- name: dunst | Configure dunst.
   
