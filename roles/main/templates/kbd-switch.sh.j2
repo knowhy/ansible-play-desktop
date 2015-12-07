@@ -3,13 +3,13 @@
 function connect(){
     sleep 1
     setxkbmap -layout us
-    xmodmap /home/me/.Xmodmap
+    xmodmap /home/{{ user }}/.Xmodmap
 }
 
 function disconnect(){
     sleep 1
     setxkbmap -layout gb
-    xmodmap /home/me/.Xmodmap
+    xmodmap /home/{{ user }}/.Xmodmap
 }
 
 lsusb | grep "{{ keyboard_vendor_id }}" &> /dev/null && connect || disconnect
