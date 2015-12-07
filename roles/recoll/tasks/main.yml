@@ -1,0 +1,21 @@
+---
+
+- name: Install recoll.
+  pacman:
+    pkg: recoll
+    state: present
+  become: true
+
+- name: Configure recoll.
+  template:
+    src: recoll.conf.j2
+    dest: "/home/{{ user }}/.recoll.conf"
+
+- stat: path=/home/{{ user }}/.recoll/xapiandb/record.DB
+  register: recolldb
+    
+- name: Start recoll index.
+  command: recolloindex
+  async: 60000
+  poll: 30
+  when: not recolldb.stat.isfile
